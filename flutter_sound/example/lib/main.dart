@@ -19,23 +19,24 @@
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+
 import 'demo/demo.dart';
 import 'livePlaybackWithBackPressure/live_playback_with_back_pressure.dart';
 import 'livePlaybackWithoutBackPressure/live_playback_without_back_pressure.dart';
+import 'loglevel/loglevel.dart';
 import 'multi_playback/multi_playback.dart';
 import 'play_from_mic/play_from_mic.dart';
+import 'player_onProgress/player_onProgress.dart';
 import 'recordToStream/record_to_stream_example.dart';
+import 'recorder_onProgress/recorder_onProgress.dart';
+import 'seek/seek.dart';
 import 'simple_playback/simple_playback.dart';
 import 'simple_recorder/simple_recorder.dart';
 import 'soundEffect/sound_effect.dart';
-import 'streamLoop/stream_loop.dart';
-import 'loglevel/loglevel.dart';
-import 'volume_control/volume_control.dart';
 import 'speed_control/speed_control.dart';
-import 'player_onProgress/player_onProgress.dart';
-import 'recorder_onProgress/recorder_onProgress.dart';
-import 'seek/seek.dart';
+import 'streamLoop/stream_loop.dart';
 import 'streamLoop_justAudio/stream_loop_just_audio.dart';
+import 'volume_control/volume_control.dart';
 
 /*
     This APP is just a driver to call the various Flutter Sound examples.
@@ -85,25 +86,7 @@ final List<Example> exampleTable = [
       flags: 0,
       route: (_) => Demo(),
       description:
-          '''This is a Demo of what it is possible to do with Flutter Sound.
-The code of this Demo app is not so simple and unfortunately not very clean :-( .
-
-Flutter Sound beginners : you probably should look to `[SimplePlayback]`  and `[SimpleRecorder]`
-
-The biggest interest of this Demo is that it shows most of the features of Flutter Sound :
-
-- Plays from various media with various codecs
-- Records to various media with various codecs
-- Pause and Resume control from recording or playback
-- Shows how to use a Stream for getting the playback (or recoding) events
-- Shows how to specify a callback function when a playback is terminated,
-- Shows how to record to a Stream or playback from a stream
-- Can show controls on the iOS or Android lock-screen
-- ...
-
-This Demo does not make use of the Flutter Sound UI Widgets.
-
-It would be really great if someone rewrite this demo soon'''),
+          '''Это демонстрация того, что можно сделать с Flutter Sound. Код этого демонстрационного приложения не так прост и, к сожалению, не очень чист :-( . Новичкам Flutter Sound: вам, вероятно, следует обратить внимание на `[SimplePlayback]` и `[SimpleRecorder]`. особенностей Flutter Sound: - Воспроизведение с различных носителей с различными кодеками - Запись на различные носители с различными кодеками - Управление паузой и возобновлением записи или воспроизведения - Показывает, как использовать поток для получения событий воспроизведения (или записи) - Показывает как указать функцию обратного вызова при прекращении воспроизведения - Показывает, как записывать в поток или воспроизводить из потока - Может отображать элементы управления на экране блокировки iOS или Android - ... В этой демонстрации не используется Flutter Звуковые виджеты пользовательского интерфейса. Было бы здорово, если бы кто-нибудь переписал это демо в ближайшее время.'''),
 
   Example(
     title: 'simplePlayback',
@@ -111,10 +94,7 @@ It would be really great if someone rewrite this demo soon'''),
     flags: 0,
     route: (_) => SimplePlayback(),
     description: '''
-This is a very simple example for Flutter Sound beginners,
-that shows how to play a remote file.
-
-This example is really basic.
+Это очень простой пример для начинающих Flutter Sound, который показывает, как воспроизвести удаленный файл. Этот пример действительно базовый.
 ''',
   ),
 
@@ -124,10 +104,7 @@ This example is really basic.
     flags: 0,
     route: (_) => SimpleRecorder(),
     description: '''
-This is a very simple example for Flutter Sound beginners,
-that shows how to record, and then playback a file.
-
-This example is really basic.
+Это очень простой пример для начинающих пользователей Flutter Sound, который показывает, как записывать, а затем воспроизводить файл. Этот пример действительно базовый.
 ''',
   ),
 
@@ -137,7 +114,7 @@ This example is really basic.
     flags: 0,
     route: (_) => MultiPlayback(),
     description: '''
-This is a simple example that plays several sound at the same time.
+Это простой пример, который воспроизводит несколько звуков одновременно.
 ''',
   ),
 
@@ -146,10 +123,7 @@ This is a simple example that plays several sound at the same time.
     subTitle: 'Volume Control',
     flags: 0,
     route: (_) => VolumeControl(),
-    description: '''
-This is a very simple example showing how to set the Volume during a playback.
-
-This example is really basic.
+    description: '''Это очень простой пример, показывающий, как установить громкость во время воспроизведения. Этот пример действительно базовый.
 ''',
   ),
 
@@ -182,8 +156,7 @@ This example is really basic.
     subTitle: 'Player onProgress',
     flags: 0,
     route: (_) => PlayerOnProgress(),
-    description: '''
-This is a very simple example showing how to  call `setSubscriptionDuration() and use onProgress() on a player.
+    description: '''Это очень простой пример, показывающий, как вызвать `setSubscriptionDuration() и использовать onProgress() для игрока.
 
 ''',
   ),
@@ -204,11 +177,7 @@ This is a very simple example showing how to  call `setSubscriptionDuration() an
     subTitle: 'Play from microphone',
     flags: tNotWeb,
     route: (_) => PlayFromMic(),
-    description: '''
-Play on the bluetooth headset what is recorded by the microphone.
-This example is very simple.
-
->>> Please ensure that your headset is correctly connected via bluetooth
+    description: '''Воспроизвести на блютуз гарнитуре то, что записано микрофоном. Этот пример очень прост. >>> Пожалуйста, убедитесь, что ваша гарнитура правильно подключена через Bluetooth
 ''',
   ),
 
@@ -218,11 +187,7 @@ This example is very simple.
     flags: tNotWeb,
     route: (_) => RecordToStreamExample(),
     description: '''
-This is an example showing how to record to a Dart Stream.
-It writes all the recorded data from a Stream to a File, which is completely stupid:
-if an App wants to record something to a File, it must not use Streams.
-
-The real interest of recording to a Stream is for example to feed a Speech-to-Text engine, or for processing the Live data in Dart in real time.
+Это пример, показывающий, как записывать в Dart Stream. Он записывает все записанные данные из потока в файл, что совершенно глупо: если приложение хочет что-то записать в файл, оно не должно использовать потоки. Реальный интерес к записи в поток заключается, например, в том, чтобы передать механизм преобразования речи в текст или для обработки данных Live в Dart в режиме реального времени.
 ''',
   ),
 
@@ -232,21 +197,7 @@ The real interest of recording to a Stream is for example to feed a Speech-to-Te
     flags: tNotWeb,
     route: (_) => LivePlaybackWithoutBackPressure(),
     description:
-        '''A very simple example showing how to play Live Data without back pressure.
-A very simple example showing how to play Live Data without back pressure.
-It feeds a live stream, without waiting that the Futures are completed for each block.
-This is simpler because the App does not need to await the playback for each block before playing another one.
-
-
-This example get the data from an asset file, which is completely stupid :
-if an App wants to play an asset file he must use "StartPlayerFromBuffer().
-
-Feeding Flutter Sound without back pressure is very simple but you can have two problems :
-- If your App is too fast feeding the audio channel, it can have problems with the Stream memory used.
-- The App does not have any knowledge of when the provided block is really played.
-If he does a "stopPlayer()" it will loose all the buffered data.
-
-This example uses the ```foodEvent``` object to resynchronize the output stream before doing a ```stop()```
+        '''Очень простой пример, показывающий, как воспроизводить Live Data без обратного давления. Очень простой пример, показывающий, как воспроизводить Live Data без обратного давления. Он передает прямую трансляцию, не дожидаясь завершения фьючерсов для каждого блока. Это проще, потому что приложению не нужно ждать воспроизведения каждого блока перед воспроизведением другого. Этот пример получает данные из файла ресурса, что совершенно глупо: если приложение хочет воспроизвести файл ресурса, он должен использовать «StartPlayerFromBuffer()». Подача звука Flutter без обратного давления очень проста, но у вас могут быть две проблемы: - Если ваше приложение слишком быстро загружает аудиоканал, у него могут быть проблемы с используемой памятью Stream.- Приложение не знает, когда действительно воспроизводится предоставленный блок.Если он выполнит «stopPlayer()», оно потеряет все буферизованные данные. В этом примере используется объект foodEvent для повторной синхронизации выходного потока перед выполнением ```stop()```
 ''',
   ),
 
@@ -256,15 +207,7 @@ This example uses the ```foodEvent``` object to resynchronize the output stream 
     flags: tNotWeb,
     route: (_) => LivePlaybackWithBackPressure(),
     description: '''
-A very simple example showing how to play Live Data with back pressure.
-It feeds a live stream, waiting that the Futures are completed for each block.
-
-This example get the data from an asset file, which is completely stupid :
-if an App wants to play an asset file he must use "StartPlayerFromBuffer().
-
-If you do not need any back pressure, you can see another simple example : "LivePlaybackWithoutBackPressure.dart".
-This other example is a little bit simpler because the App does not need to await the playback for each block before
-playing another one.
+Очень простой пример, показывающий, как воспроизводить Live Data с противодавлением. Он передает прямую трансляцию, ожидая завершения фьючерсов для каждого блока. Этот пример получает данные из файла ресурсов, что совершенно глупо: если приложение хочет воспроизвести файл ресурсов, оно должно использовать «StartPlayerFromBuffer()». Если вам не нужно обратное давление, вы можете увидеть другой простой пример: «LivePlaybackWithoutBackPressure .dart". Этот другой пример немного проще, потому что приложению не нужно ждать воспроизведения каждого блока перед воспроизведением другого.
 ''',
   ),
 
@@ -274,9 +217,7 @@ playing another one.
     flags: tNotWeb,
     route: (_) => SoundEffect(),
     description: '''
-```startPlayerFromStream()``` can be very efficient to play sound effects. For example in a game App.
-The App open the Audio Session and call ```startPlayerFromStream()``` during initialization.
-When it want to play a noise, it has just to call the verb ```feed```
+```startPlayerFromStream()`` может быть очень эффективным для воспроизведения звуковых эффектов. Например, в игровом приложении. Приложение открывает аудиосессию и вызывает ```startPlayerFromStream()``` во время инициализации. Когда он хочет воспроизвести какой-нибудь звук, ему достаточно произнести глагол «кормить».
 ''',
   ),
 
@@ -286,13 +227,7 @@ When it want to play a noise, it has just to call the verb ```feed```
     flags: tNotWeb,
     route: (_) => StreamLoop(),
     description: '''
-```streamLoop()``` is a very simple example which connect the FlutterSoundRecorder sink
-to the FlutterSoundPlayer Stream.
-
-Of course, we do not play to the loudspeaker to avoid a very unpleasant Larsen effect.
-
-This example does not use a new StreamController, but use directly `foodStreamController`
-from flutter_sound_player.dart.
+```streamLoop()``` — это очень простой пример, который подключает приемник FlutterSoundRecorder к потоку FlutterSoundPlayer. Конечно, мы не играем в громкоговоритель, чтобы избежать очень неприятного эффекта Ларсена. В этом примере не используется новый StreamController, а используется напрямую foodStreamController из flutter_sound_player.dart.
 ''',
   ),
 
@@ -302,8 +237,7 @@ from flutter_sound_player.dart.
     flags: 0,
     route: (_) => LogLevel(),
     description: '''
-```
-Shows how to change the loglevel during an audio session.
+```Показывает, как изменить уровень логирования во время аудиосессии.
 ''',
   ),
 
@@ -313,8 +247,7 @@ Shows how to change the loglevel during an audio session.
     flags: tNotWeb,
     route: (_) => StreamLoopJustAudio(),
     description: '''
-    ```
-    Test the StreamLoop with JustAudio cohabitation.
+    ```Протестируйте StreamLoop с сожительством JustAudio.
     ''',
   ),
 ];
